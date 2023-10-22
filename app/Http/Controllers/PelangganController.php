@@ -25,6 +25,7 @@ class PelangganController extends Controller
     public function create()
     {
         //
+        return view('pelanggan.create');
     }
 
     /**
@@ -33,6 +34,20 @@ class PelangganController extends Controller
     public function store(Request $request)
     {
         //
+        
+        $request->validate([
+            'namaPelanggan'=>'required',
+            'alamat'=>'required',
+            'noTelepon'=>'required'
+        ]);
+
+        DB::table('pelanggan')->insert([
+            'NamaPelanggan' => $request->get('namaPelanggan'),
+            'Alamat' => $request->get('alamat'),
+            "NoTelepon" => $request->get('noTelepon')
+        ]);
+        return redirect('/pelanggan')->with('success', 'Member saved!');
+
     }
 
     /**
@@ -46,24 +61,36 @@ class PelangganController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Pelanggan $pelanggan)
+    public function edit($id)
     {
         //
+        $pelanggan = DB::table('pelanggan')->where('IdPelanggan', $id)->first();
+        // die(json_encode($pelanggan));
+        return view('pelanggan.edit', compact('pelanggan'));
+
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Pelanggan $pelanggan)
+    public function update(Request $request, $id)
     {
         //
+        DB::table('pelanggan')->where('IdPelanggan', $id)->update([
+            'NamaPelanggan' => $request->get('namaPelanggan'),
+            'Alamat' => $request->get('alamat')
+        ]);
+        return redirect('/pelanggan')->with('success', 'Member updated!');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Pelanggan $pelanggan)
+    public function destroy($id)
     {
         //
+        DB::table('pelanggan')->where('IdPelanggan', $id)->delete();
+
+        return redirect('/pelanggan')-> with('danger', 'Member deleted');
     }
 }
