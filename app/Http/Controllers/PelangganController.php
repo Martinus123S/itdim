@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Pelanggan;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
 class PelangganController extends Controller
@@ -10,9 +11,12 @@ class PelangganController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public static function index()
     {
         //
+        $pelanggan = DB::table('pelanggan')->get();
+
+        return view('pelanggan.index', compact('pelanggan'));
     }
 
     /**

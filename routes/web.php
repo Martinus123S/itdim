@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\PelangganController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,6 +15,6 @@ use App\Http\Controllers\Controller;
 */
 
 Route::get('/', function () {
-    return Controller::index();
+    return "";
 });
-Route::resource('pelanggan', ProductController::class);
+Route::resource('pelanggan', PelangganController::class);
